@@ -1,0 +1,17 @@
+{
+  "name": "video-hub",
+  "version": "1.0.0",
+  "description": "video sharing ans watching application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "mongoose",
+    "node.js",
+    "youtube"
+  ],
+  "author": "Abhishek Kumar",
+  "license": "ISC"
+}
