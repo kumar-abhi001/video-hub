@@ -4,7 +4,7 @@
   "description": "video sharing ans watching application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/index.js"
   },
   "keywords": [
     "express",
@@ -13,5 +13,8 @@
     "youtube"
   ],
   "author": "Abhishek Kumar",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
 }
