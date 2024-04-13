@@ -1,13 +1,13 @@
 const asyncHandler = (fnc) => async () => {
-    try {
-        await fnc(req, res, next);
-    } catch (error) {
-        res.status(error.status || 400).json({
-            sucess: false,
-            message: error.message,
-        });
-    }
-}
+  try {
+    await fnc(req, res, next);
+  } catch (error) {
+    res.status(error.status || 400).json({
+      sucess: false,
+      message: error.message,
+    });
+  }
+};
 
 export { asyncHandler };
 //advance syntax
