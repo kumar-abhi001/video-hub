@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "video sharing ans watching application",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/server.js"
   },
   "keywords": [
     "express",
@@ -17,5 +18,10 @@
   "devDependencies": {
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.1"
   }
 }
