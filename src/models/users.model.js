@@ -2,14 +2,19 @@ import mongoose, { Schema } from "mongoose";
 
 const usersSchema = new Schema(
   {
-    watchHistory: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "videos",
-    },
+    watchHistory: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "videos",
+      },
+    ],
     username: {
       type: String,
       require: true,
       unique: true,
+      index: true,
+      lowercase: true,
+      trim: true,
     },
     email: {
       type: String,
@@ -22,7 +27,7 @@ const usersSchema = new Schema(
       unique: true,
     },
     avatar: {
-      type: String,
+      type: String, //cloudnary url
       require: false,
       unique: false,
     },
@@ -33,7 +38,7 @@ const usersSchema = new Schema(
     },
     password: {
       type: String,
-      require: true,
+      require: [true, "Password is required."],
       unique: false,
     },
     refreshToke: {

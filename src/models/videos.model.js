@@ -10,8 +10,10 @@ const videosSchema = new Schema(
       type: String,
     },
     owner: {
-      type: mongoose.Types.ObjectId,
-      require: true,
+        type: mongoose.Types.ObjectId,
+        ref: "Users",
+        require: true,
+      unique: true
     },
     title: {
       type: String,
@@ -22,14 +24,14 @@ const videosSchema = new Schema(
     },
     duration: {
       type: Number,
-      require: true,
     },
     views: {
-      type: Number,
+        type: Number,
+        default: 0,
     },
     isPublished: {
       type: Boolean,
-      require: true,
+      default: true
     },
   },
   { timestamps: true }
