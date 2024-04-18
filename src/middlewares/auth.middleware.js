@@ -2,15 +2,17 @@ import { ApiError } from "../utils/errorHandler.js";
 import jwt from "jsonwebtoken";
 //Authentication
 export const VerifyJWT = async (req, res, next) => {
-    const token = req.cookies?.accessToken || req.header?.("Authorization")?.replace("Bearer ", "");
-    
-    if (!token) {
-        res.send(new ApiError(401, "Unauthorized access"));
-    }
+  const token =
+    req.cookies?.accessToken ||
+    req.header?.("Authorization")?.replace("Bearer ", "");
 
-    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    req._id = decodedToken._id
-    console.log(decodedToken);
+  if (!token) {
+    res.send(new ApiError(401, "Unauthorized access"));
+  }
 
-    next();
-}
+  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  req._id = decodedToken._id;
+  console.log(decodedToken);
+
+  next();
+};

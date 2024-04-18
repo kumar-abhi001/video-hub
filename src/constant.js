@@ -1,2 +1,2 @@
 const DB_NAME = "videohub";
-export  { DB_NAME };
+export { DB_NAME };

@@ -35,10 +35,12 @@ const usersSchema = new Schema(
     refreshToken: {
       type: String,
     },
-    watchHistory: [{
-      type: Schema.Types.ObjectId,
-      ref: "videos",
-    }],
+    watchHistory: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "videos",
+      },
+    ],
   },
   { timestamps: true }
 );
@@ -58,21 +60,21 @@ usersSchema.pre("save", async function (next) {
 //method to check password is correct or not
 usersSchema.methods.checkPassword = async function (password) {
   return bcrypt.compare(password, this.password); // return boolean value
-}
+};
 
 //generate access token
 usersSchema.methods.generateAccessToken = async function () {
   return jwt.sign(
     {
       _id: this._id,
-      username: this.username
+      username: this.username,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
     }
-  )
-}
+  );
+};
 
 //adding method to creating refresh token
 usersSchema.methods.generateRefreshToken = async function () {
@@ -83,11 +85,9 @@ usersSchema.methods.generateRefreshToken = async function () {
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     }
-  )
-}
-
-
+  );
+};
 
 export const Users = mongoose.model("Users", usersSchema);
