@@ -4,48 +4,41 @@ import jwt from "jsonwebtoken";
 
 const usersSchema = new Schema(
   {
-    watchHistory: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "videos",
-      },
-    ],
     username: {
       type: String,
-      require: true,
+      required: true,
       unique: true,
-      index: true,
       lowercase: true,
       trim: true,
+      index: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
       unique: true,
     },
     fullName: {
       type: String,
-      require: true,
-      unique: true,
+      required: true,
     },
     avatar: {
-      type: String, //cloudnary url
-      require: false,
-      unique: false,
+      type: String, // Cloudinary URL
+      required: true,
     },
     coverImage: {
       type: String,
-      require: false,
-      unique: false,
     },
     password: {
       type: String,
-      require: [true, "Password is required."],
-      unique: false,
+      required: [true, "Password is required."],
     },
-    refreshToke: {
+    refreshToken: {
       type: String,
     },
+    watchHistory: [{
+      type: Schema.Types.ObjectId,
+      ref: "videos",
+    }],
   },
   { timestamps: true }
 );
@@ -54,8 +47,7 @@ const usersSchema = new Schema(
 usersSchema.pre("save", async function (next) {
   if (this.isModified("password") === true) {
     try {
-      const saltRound = await bcrypt.genSalt(10);
-      this.password = await bcrypt.hash(this.password, saltRound);
+      this.password = await bcrypt.hash(this.password, 10);
     } catch (error) {
       console.log("ERROR in password hashing: ", error);
     }
@@ -69,7 +61,7 @@ usersSchema.methods.checkPassword = async function (password) {
 }
 
 //generate access token
-usersSchema.methods.generateRefreshToken = async function () {
+usersSchema.methods.generateAccessToken = async function () {
   return jwt.sign(
     {
       _id: this._id,
@@ -88,7 +80,6 @@ usersSchema.methods.generateRefreshToken = async function () {
     {
       _id: this._id,
       username: this.username,
-      password: this.password
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
