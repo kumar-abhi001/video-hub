@@ -3,6 +3,7 @@ import { Users } from "../models/users.model.js";
 import { ApiError } from "../utils/errorHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { apiResponse } from "../utils/apiResponse.js";
+import jwt from "jsonwebtoken";
 
 //Register controlller logic
 const registerUser = asyncHandler(async (req, res) => {
@@ -19,10 +20,9 @@ const registerUser = asyncHandler(async (req, res) => {
   if (userExist) {
     throw new ApiError(409, "Username or email already exist");
   }
-
   const avatarLocalPath = req.files?.avatar[0]?.path;
   let coverLocalPath;
-  if (req.files && Array.isArray(req.files.cover)) {
+  if (req.files && Array.isArray(req.files.cover) ) {
     coverLocalPath = req.files.cover[0].path;
   }
 
@@ -107,4 +107,63 @@ const logoutUser = asyncHandler(async (req, res) => {
     .send(new apiResponse(204, "", "User is logged-out"));
 });
 
-export { registerUser, loginUser, logoutUser };
+//Refresh Access Token
+const refereshAccessToken = asyncHandler(async (req, res) => {
+  const incomingRefreshToken = req.cookies?.refereshToken || req.header?.("Authorization")?.replace("Bearer ", "");;
+
+  //No incoming refresh token
+  if (!incomingRefreshToken) {
+    throw new ApiError(401, "Unauthorized Access");
+  }
+
+  //Decode the refresh token
+  const decodedRefreshToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET);
+  
+  //If not decoded
+  if (!decodedRefreshToken) {
+    throw new ApiError(401, "Token is incorrect");
+  }
+
+  //find user with decoded details
+  const user = await Users.findById(decodedRefreshToken._id);
+  
+  if (!user) {
+    throw new ApiError(401, "User not found");
+  }
+
+  //check database refreshToken with request refreshToken
+  if (user.refreshToken !== incomingRefreshToken) {
+    throw new ApiError(404, "Invalid refreshToken");
+  }
+  
+  //generate new token
+  const accessToken = await user.generateAccessToken();
+  const newRefreshToken = await user.generateRefreshToken();
+
+  user.refreshToken = newRefreshToken;
+  user.save();
+  
+  const userDetail = await Users.findById(user._id).select("-password, -refreshToken");
+
+  //option for setting cookies
+  const option = {
+    httpOnly: true,
+    secure: true
+  }
+
+  return res.status(202)
+    .clearCookie("refreshToken", option)
+    .cookie("refreshToken", newRefreshToken, option)
+    .cookie("accessToken", accessToken, option)
+    .send(new apiResponse(202, userDetail, "Token are refreshed"));
+
+});
+
+
+
+export {
+  registerUser,
+  loginUser,
+  logoutUser,
+  refereshAccessToken
+};
