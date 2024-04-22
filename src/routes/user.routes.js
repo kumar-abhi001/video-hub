@@ -1,5 +1,9 @@
 import { Router } from "express";
 import {
+  changeAvatar,
+  changeCoverImage,
+  changeDetails,
+  changePassword,
   loginUser,
   logoutUser,
   refereshAccessToken,
@@ -26,5 +30,12 @@ userRouter.route("/register").post(
 
 userRouter.route("/login").post(loginUser);
 userRouter.route("/logout").post(VerifyJWT, logoutUser);
-userRouter.route("/refresh-token").post(refereshAccessToken);
+userRouter.route("/new-token").post(refereshAccessToken);
+
+//change user
+userRouter.route("/change/password").post( VerifyJWT, changePassword);
+userRouter.route("/change/details").post(VerifyJWT, changeDetails);
+userRouter.route("/change/avatar").post(VerifyJWT, upload.single("avatar"), changeAvatar);
+userRouter.route("/change/cover-image").post(VerifyJWT, upload.single("cover", changeCoverImage));
+
 export default userRouter;

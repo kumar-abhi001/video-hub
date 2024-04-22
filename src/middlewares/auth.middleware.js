@@ -1,5 +1,6 @@
 import { ApiError } from "../utils/errorHandler.js";
 import jwt from "jsonwebtoken";
+import { Users } from "../models/users.model.js";
 //Authentication
 export const VerifyJWT = async (req, res, next) => {
   try {
@@ -8,16 +9,18 @@ export const VerifyJWT = async (req, res, next) => {
       req.header?.("Authorization")?.replace("Bearer ", "");
   
     if (!token) {
-      res.send(new ApiError(401, "Unauthorized access"));
+      throw new ApiError(401, "Unauthorized access");
     }
   
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    req._id = decodedToken._id;
-    console.log(decodedToken);
-  
+    if (!decodedToken) {
+      throw new ApiError(401, "Unauthorized Access");
+    }
+
+    const user = await Users.findById(decodedToken._id).selectr("-refreshToken -password");
+    req.user = user;
     next();
   } catch (error) {
-    console.log(error);
     res.send(new ApiError(401, "Error in authenticaton"));
   }
 };

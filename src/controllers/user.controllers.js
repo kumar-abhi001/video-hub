@@ -159,11 +159,105 @@ const refereshAccessToken = asyncHandler(async (req, res) => {
 
 });
 
+/****************  Settings for user  **************/
+//change password of user
+const changePassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const user = await Users.findById(req.user?._id); // middleware added _id to req
+
+  if (!user) {
+    throw new ApiError(404, "User not found!");
+  }
+
+  const isPasswordValid = await user.checkPassword(oldPassword);
+  if (!isPasswordValid) {
+    throw new ApiError(401, "Incorrect Old Password");
+  }
+
+  user.password = newPassword;
+  user.save();
+
+  res.status(200).send(new apiResponse(200, "", "Password is changed successfully"));
+
+});
+
+//change name
+const changeDetails = asyncHandler(async (req, res) => {
+  const { name, email } = req.body;
+  const user = Users.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        name,
+        email
+      }
+    },
+    {
+      new: true
+    }
+  ).select("-password -refreshToken");
+
+  return res
+    .status(202)
+    .send(new apiResponse(202, user, "Account detail is updated"));
+});
+
+//change user avatar
+const changeAvatar = asyncHandler(async (req, res) => {
+  const newAvatarLocalPath = req.files?.avatar[0]?.path;
+  if (!newAvatarLocalPath) {
+    throw new ApiError(400, "Avatar path not able for update");
+  }
+
+  const newAvatarUrl = uploadOnCloudinary(newAvatarLocalPath);
+  const user = Users.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        avatar: newAvatarUrl
+      }
+    },
+    {
+      new: true
+    }
+  ).select("-password -refreshToken");
+
+  return res.status(202)
+    .send(new apiResponse(202, user, "Avatar is updated successfully"));
+});
+
+//change cover image
+const changeCoverImage = asyncHandler(async (req, res) => {
+  const newCoverLocalPath = req.files?.cover[0]?.path;
+  if (!newCoverLocalPath) {
+    throw new ApiError(400, "Avatar path not able for update");
+  }
+
+  const newCoverUrl = uploadOnCloudinary(newCoverLocalPath);
+  const user = Users.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        coverImage: newCoverUrl
+      }
+    },
+    {
+      new: true
+    }
+  ).select("-password -refreshToken");
+
+  return res.status(202)
+    .send(new apiResponse(202, user, "Avatar is updated successfully"));
+});
 
 
 export {
   registerUser,
   loginUser,
   logoutUser,
-  refereshAccessToken
+  refereshAccessToken,
+  changePassword,
+  changeDetails,
+  changeAvatar,
+  changeCoverImage
 };
