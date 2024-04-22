@@ -33,9 +33,10 @@ userRouter.route("/logout").post(VerifyJWT, logoutUser);
 userRouter.route("/new-token").post(refereshAccessToken);
 
 //change user
-userRouter.route("/change/password").post( VerifyJWT, changePassword);
-userRouter.route("/change/details").post(VerifyJWT, changeDetails);
-userRouter.route("/change/avatar").post(VerifyJWT, upload.single("avatar"), changeAvatar);
-userRouter.route("/change/cover-image").post(VerifyJWT, upload.single("cover", changeCoverImage));
+userRouter.route("/change/password").patch( VerifyJWT, changePassword);
+userRouter.route("/change/details").patch(VerifyJWT, changeDetails);
+userRouter.route("/change/avatar").patch(VerifyJWT, upload.single("avatar"), changeAvatar);
+userRouter.route("/change/cover-image").patch(VerifyJWT, upload.single("cover", changeCoverImage));
 
+//getting information like channel profile, history of user
 export default userRouter;

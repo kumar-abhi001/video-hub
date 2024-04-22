@@ -250,6 +250,83 @@ const changeCoverImage = asyncHandler(async (req, res) => {
     .send(new apiResponse(202, user, "Avatar is updated successfully"));
 });
 
+// get channel information
+
+const getUserChannelProfile = asyncHandler(async (req, res) => {
+  //get the user or channel from query params
+  const { username } = req.params;
+
+  if (!username?.trim()) {
+    throw new ApiError(400, "Username is missing in channel profile.");
+  }
+
+  const channel = await Users.aggregate([
+    //stage 1 matching the username in users database
+    {
+      $match: {
+        username: username?.toLowerCase()
+      }
+    },
+
+    //stage 2 - number of subscribers of channel
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "channel",
+        as: "subscriber"
+      }
+    },
+
+    //stage 3 - number of channel this channel is subscribed
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "subscriber",
+        as: "channel"
+      }
+    },
+
+    {
+      $addFields: {
+        subscribersCount: {
+          $size: "$subscribers"
+        },
+        channelsSubscribedToCount: {
+          $size: "$subscribedTo"
+        },
+        isSubscribed: {
+          $cond: {
+            if: { $in: [req.user?._id, "$subscribers.subscriber"] },
+            then: true,
+            else: false
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        fullName: 1,
+        username: 1,
+        subscribersCount: 1,
+        channelsSubscribedToCount: 1,
+        isSubscribed: 1,
+        avatar: 1,
+        coverImage: 1,
+        email: 1
+
+      }
+    }
+  ])
+
+  if (!channel?.length) {
+    throw new ApiError(400, "Channel doesn't exit");
+  }
+
+  res.status(200)
+    .json(new apiResponse(200, channel[0], "User channel fetched successfully:)"));
+});
 
 export {
   registerUser,
@@ -259,5 +336,6 @@ export {
   changePassword,
   changeDetails,
   changeAvatar,
-  changeCoverImage
+  changeCoverImage,
+  getUserChannelProfile
 };
