@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+import mongoose from "mongoose";
+import validator from "validator";
 
-const TrendingData = new mongoose.Schema({
+const TrendingDataSchema = new mongoose.Schema({
   email: {
     type: String,
     validate(value) {
@@ -53,6 +53,6 @@ const TrendingData = new mongoose.Schema({
   },
 });
 
-const TrendingDataModel = mongoose.model("TrendingData", TrendingData);
+const TrendingDataModel = mongoose.model("TrendingData", TrendingDataSchema);
 
-module.exports = TrendingDataModel;
+export default TrendingDataModel;

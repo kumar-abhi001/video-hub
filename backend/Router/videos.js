@@ -1,9 +1,8 @@
-require("dotenv").config();
-require("../Database/database");
-const express = require("express");
-const userData = require("../Models/user");
-const videodata = require("../Models/videos");
-const TrendingData = require("../Models/trending");
+import express from "express";
+import userData from "../Models/user.js";
+import videodata from "../Models/videos.js";
+import TrendingData from "../Models/trending.js";
+
 const Videos = express.Router();
 
 Videos.post("/publish", async (req, res) => {
@@ -863,4 +862,4 @@ Videos.get("/getsavedplaylist/:email", async (req, res) => {
   }
 });
 
-module.exports = Videos;
+export default Videos;

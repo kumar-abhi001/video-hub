@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+import mongoose from "mongoose";
+import validator from "validator";
 
-const Comment = new mongoose.Schema({
+const CommentSchema = new mongoose.Schema({
   username: {
     type: String,
   },
@@ -32,7 +32,7 @@ const Comment = new mongoose.Schema({
   },
 });
 
-const VideoData = new mongoose.Schema({
+const VideoDataSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -91,11 +91,11 @@ const VideoData = new mongoose.Schema({
         type: Number,
         default: 0,
       },
-      comments: [Comment],
+      comments: [CommentSchema],
     },
   ],
 });
 
-const VideoDataModel = mongoose.model("VideoData", VideoData);
+const VideoDataModel = mongoose.model("VideoData", VideoDataSchema);
 
-module.exports = VideoDataModel;
+export default VideoDataModel;

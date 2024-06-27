@@ -1,8 +1,9 @@
-require("dotenv").config();
-require("../Database/database");
-const express = require("express");
-const userData = require("../Models/user");
-const videodata = require("../Models/videos");
+
+import '../Database/database.js';
+import express from 'express';
+import userData from '../Models/user.js';
+import videodata from '../Models/videos.js';
+
 const Comments = express.Router();
 
 Comments.post("/comments/:id", async (req, res) => {
@@ -267,4 +268,4 @@ Comments.post("/deletecomment/:videoId/:commentId/:email", async (req, res) => {
   }
 });
 
-module.exports = Comments;
+export default Comments;

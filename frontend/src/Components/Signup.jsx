@@ -70,6 +70,8 @@ function Signup() {
           "Content-Type": "application/json",
         },
       });
+
+      console.log(response);
       const { message, token } = await response.json();
       if (message === "REGISTRATION SUCCESSFUL") {
         SignupNotify();

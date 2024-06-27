@@ -1,4 +1,8 @@
 {
+  "type": "module",
+  "scripts": {
+    "start": "nodemon node server.js"
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
@@ -10,8 +14,10 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.4",
     "nodemailer": "^6.9.4",
-    "nodemon": "^3.0.1",
     "react-top-loading-bar": "^2.3.1",
     "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }

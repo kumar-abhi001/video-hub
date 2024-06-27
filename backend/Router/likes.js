@@ -1,8 +1,8 @@
-require("dotenv").config();
-require("../Database/database");
-const express = require("express");
-const userData = require("../Models/user");
-const videodata = require("../Models/videos");
+import '../Database/database.js';
+import express from 'express';
+import userData from '../Models/user.js'; 
+import videodata from '../Models/videos.js';
+
 const Likes = express.Router();
 
 Likes.post("/like/:id/:email/:email2", async (req, res) => {
@@ -173,4 +173,4 @@ Likes.post("/dislikevideo/:id/:email", async (req, res) => {
   }
 });
 
-module.exports = Likes;
+export default Likes;

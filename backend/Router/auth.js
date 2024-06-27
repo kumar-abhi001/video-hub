@@ -1,12 +1,11 @@
-require("dotenv").config();
-require("../Database/database");
-const express = require("express");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const userData = require("../Models/user");
+import "../Database/database.js";
+import express from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import userData from "../Models/user.js";
+import nodemailer from "nodemailer";
+
 const auth = express.Router();
-const nodemailer = require("nodemailer");
-const URL = "https://youtube-clone-mern-backend.vercel.app";
 
 auth.post("/signup", async (req, res) => {
   try {
@@ -28,48 +27,6 @@ auth.post("/signup", async (req, res) => {
     });
     await saveData.save();
 
-    // Nodemailer configuration
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-      },
-    });
-
-    const mailOptions = {
-      from: "admin@shubho.youtube.app",
-      to: email,
-      subject: "Welcome to Shubho's YouTube Clone!",
-      html: `
-        <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
-          <h1 style="color: #333;">Welcome to Shubho's YouTube Clone!</h1>
-          <p style="color: #555;">Hello ${name},</p>
-          <p style="color: #555;">We are excited to have you as a new member of our community! Thank you for joining.</p>
-          <p style="color: #555;">Feel free to explore our platform and start sharing your videos with the world.</p>
-          <p style="color: #555;">If you have any questions or need assistance, don't hesitate to reach out to us.</p>
-          <p style="color: #555;">Best regards,</p>
-          <p style="color: #555;">Shubhojeet Bera</p>
-        </div>
-      `,
-    };
-    
-
-    // Send the email
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error(error);
-        return res.json({
-          message: "Error sending email",
-        });
-      } else {
-        console.log("Email sent: " + info.response);
-        res.json({
-          message: "Password reset link sent to your email",
-        });
-      }
-    });
-
     res.json({
       message: "REGISTRATION SUCCESSFUL",
       token,
@@ -84,6 +41,7 @@ auth.post("/signup", async (req, res) => {
 auth.post("/login", async (req, res) => {
   try {
     const { email1, password1 } = req.body;
+    console.log(email1, password1);
     const user = await userData.findOne({ email: email1 });
     if (!user) {
       return res.json({
@@ -158,7 +116,6 @@ auth.post("/resetlink", async (req, res) => {
         </div>
       `,
     };
-    
 
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
@@ -181,4 +138,4 @@ auth.post("/resetlink", async (req, res) => {
   }
 });
 
-module.exports = auth;
+export default auth;

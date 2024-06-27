@@ -1,9 +1,9 @@
-require("dotenv").config();
-require("../Database/database");
-const express = require("express");
-const userData = require("../Models/user");
-const videodata = require("../Models/videos");
-const TrendingData = require("../Models/trending");
+import '../Database/database.js';
+import express from 'express';
+import userData from '../Models/user.js';
+import videodata from '../Models/videos.js';
+import TrendingData from '../Models/trending.js';
+
 const Channel = express.Router();
 
 Channel.get("/getchannel/:email", async (req, res) => {
@@ -622,4 +622,4 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
   }
 });
 
-module.exports = Channel;
+export default Channel;

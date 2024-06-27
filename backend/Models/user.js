@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+import mongoose from "mongoose";
+import validator from "validator";
 
-const Playlists = new mongoose.Schema({
+const PlaylistsSchema = new mongoose.Schema({
   playlist_name: {
     type: String,
     required: true,
@@ -58,7 +58,7 @@ const Playlists = new mongoose.Schema({
   ],
 });
 
-const UserData = new mongoose.Schema({
+const UserDataSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -271,9 +271,9 @@ const UserData = new mongoose.Schema({
       },
     },
   ],
-  Playlists: [Playlists],
+  Playlists: [PlaylistsSchema],
 });
 
-const user = mongoose.model("userData", UserData);
+const UserModel = mongoose.model("userData", UserDataSchema);
 
-module.exports = user;
+export default UserModel;

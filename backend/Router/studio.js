@@ -1,12 +1,13 @@
-require("dotenv").config();
-require("../Database/database");
-const jwt = require("jsonwebtoken");
-const express = require("express");
-const userData = require("../Models/user");
-const videodata = require("../Models/videos");
-const TrendingData = require("../Models/trending");
-const bcrypt = require("bcrypt");
+// Import required modules
+import express from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import userData from "../Models/user.js";
+import videodata from "../Models/videos.js";
+import TrendingData from "../Models/trending.js";
+
 const Studio = express.Router();
+const router = express.Router();
 
 Studio.post("/deletevideo/:videoId", async (req, res) => {
   const videoId = req.params.videoId;
@@ -319,4 +320,4 @@ Studio.post("/resetpassword", async (req, res) => {
   }
 });
 
-module.exports = Studio;
+export default Studio;
