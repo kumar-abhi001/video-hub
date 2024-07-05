@@ -14,9 +14,11 @@ import Zoom from "@mui/material/Zoom";
 import noImage from "../../img/no-comment.png";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useNavigate } from "react-router-dom";
 
 function Comments() {
-  const backendURL = "http://localhost:3000"
+  const navigate = useNavigate();
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const [Email, setEmail] = useState();
   const [AllComments, setAllComments] = useState([]);
   const [Profile, setProfile] = useState();
@@ -614,7 +616,7 @@ function Comments() {
                         key={index}
                         onClick={() => {
                           if (element.videoData._id !== undefined) {
-                            window.location.href = `/studio/video/comments/${element.videoData._id}`;
+                            navigate(`/studio/video/comments/${element.videoData._id}`);
                           }
                         }}
                       >
@@ -808,7 +810,7 @@ function Comments() {
                       key={index}
                       onClick={() => {
                         if (element.videoData._id !== undefined) {
-                          window.location.href = `/studio/video/comments/${element.videoData._id}`;
+                          navigate(`/studio/video/comments/${element.videoData._id}`);
                         }
                       }}
                     >

@@ -5,9 +5,11 @@ import Branding from "./Branding";
 import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import Basic from "./Basic";
+import { useNavigate } from "react-router-dom";
 
 function Customization() {
-  const backendURL = "http://localhost:3000"
+  const navigate = useNavigate();
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const [currentTab, setCurrentTab] = useState("branding");
   const [email, setEmail] = useState();
   const [channelID, setChannelID] = useState();
@@ -162,7 +164,7 @@ function Customization() {
               <p
                 onClick={() => {
                   if (channelID !== undefined) {
-                    window.location.href = `/channel/${channelID}`;
+                    navigate(`/channel/${channelID}`);
                   }
                 }}
                 style={{ cursor: "pointer" }}

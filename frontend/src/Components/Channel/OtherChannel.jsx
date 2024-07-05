@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "../Navbar";
 import LeftPanel from "../LeftPanel";
@@ -23,7 +23,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function OtherChannel() {
-  const backendURL = "https://localhost:3000"
+  const navigate = useNavigate();
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const { id } = useParams();
   const [Email, setEmail] = useState();
   const [newEmail, setnewEmail] = useState();
@@ -434,7 +435,7 @@ function OtherChannel() {
                           : "customize-channel btn-light-mode"
                       }
                       onClick={() => {
-                        window.location.href = "/studio/customize";
+                        navigate("/studio/customize");
                       }}
                     >
                       Customize channel
@@ -444,7 +445,7 @@ function OtherChannel() {
                         theme ? "manage-videos" : "manage-videos btn-light-mode"
                       }
                       onClick={() => {
-                        window.location.href = "/studio/video";
+                        navigate("/studio/video");
                       }}
                     >
                       Manage videos
@@ -452,7 +453,7 @@ function OtherChannel() {
                     <div
                       className="setting-btn"
                       onClick={() => {
-                        window.location.href = "/studio/video";
+                        navigate("/studio/video");
                       }}
                     >
                       <RiUserSettingsLine

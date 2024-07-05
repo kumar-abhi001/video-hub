@@ -4,6 +4,7 @@ import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import deleteIMG from "../../img/delete.jpg";
+import { useNavigate } from "react-router-dom";
 
 function generateRandomColors(count) {
   const transparency = 0.7; // Adjust transparency as needed (0 to 1)
@@ -20,7 +21,8 @@ function generateRandomColors(count) {
 }
 
 function ChannelPlaylists(prop) {
-  const backendURL = "https://localhost:3000"
+  const navigate = useNavigate();
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const [PlaylistData, setPlaylistData] = useState([]);
   const [email, setEmail] = useState();
   const [playlistColors, setPlaylistColors] = useState([]);
@@ -207,7 +209,7 @@ function ChannelPlaylists(prop) {
                             alt=""
                             className="playlist-thumbnail"
                             onClick={() => {
-                              window.location.href = `/video/${element.playlist_videos[0].videoID}`;
+                              navigate(`/video/${element.playlist_videos[0].videoID}`);
                             }}
                           />
                         </div>
@@ -220,7 +222,7 @@ function ChannelPlaylists(prop) {
                           }
                           style={{ backgroundColor }}
                           onClick={() => {
-                            window.location.href = `/video/${element.playlist_videos[0].videoID}`;
+                            navigate(`/video/${element.playlist_videos[0].videoID}`);
                           }}
                         >
                           <PlaylistPlayIcon
@@ -235,7 +237,7 @@ function ChannelPlaylists(prop) {
                         <p>{element.playlist_name}</p>
                         <p
                           onClick={() =>
-                            (window.location.href = `/playlist/${element._id}`)
+                            (navigate(`/playlist/${element._id}`))
                           }
                           className={
                             theme

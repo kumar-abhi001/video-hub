@@ -10,7 +10,7 @@ import Navbar from "./Navbar";
 import "../Css/theme.css";
 
 function Browse() {
-  const backendURL = "http://localhost:3000";
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const [thumbnails, setThumbnails] = useState([]);
   const [Titles, setTitles] = useState();
   const [uploader, setUploader] = useState();
@@ -93,7 +93,7 @@ function Browse() {
     const getVideos = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/getvideos"
+          "https://video-hub-oyrn.onrender.com/getvideos"
         );
         const {
           thumbnailURLs,

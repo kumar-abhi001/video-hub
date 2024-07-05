@@ -14,7 +14,7 @@ import Zoom from "@mui/material/Zoom";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 
 function AccountPop() {
-  const backendURL = "http://localhost:3000";
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState("");

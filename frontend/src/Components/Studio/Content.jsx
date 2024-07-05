@@ -23,9 +23,11 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function Content() {
-  const backendURL = "http://localhost:3000"
+  const navigate = useNavigate();
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const [userVideos, setUserVideos] = useState([]);
   const [sortByDateAsc, setSortByDateAsc] = useState(true);
   const [Email, setEmail] = useState();
@@ -362,7 +364,7 @@ function Content() {
                             alt="thumbnail"
                             className="studio-video-thumbnail"
                             onClick={() => {
-                              window.location.href = `/studio/video/edit/${element._id}`;
+                              navigate(`/studio/video/edit/${element._id}`);
                             }}
                           />
                           <p className="video-left-duration">
@@ -435,7 +437,7 @@ function Content() {
                                   : "studio-video-title text-light-mode"
                               }
                               onClick={() => {
-                                window.location.href = `/studio/video/edit/${element._id}`;
+                                navigate(`/studio/video/edit/${element._id}`);
                               }}
                             >
                               {element.Title.length <= 40
@@ -473,7 +475,7 @@ function Content() {
                                 fontSize="medium"
                                 style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
-                                  window.location.href = `/studio/video/edit/${element._id}`;
+                                  navigate(`/studio/video/edit/${element._id}`);
                                 }}
                               />
                             </Tooltip>
@@ -491,7 +493,7 @@ function Content() {
                                 fontSize="medium"
                                 style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
-                                  window.location.href = `/studio/video/comments/${element._id}`;
+                                  navigate(`/studio/video/comments/${element._id}`);
                                 }}
                               />
                             </Tooltip>
@@ -509,7 +511,7 @@ function Content() {
                                 fontSize="medium"
                                 style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
-                                  window.location.href = `/video/${element._id}`;
+                                  navigate(`/video/${element._id}`);
                                 }}
                               />
                             </Tooltip>
@@ -548,7 +550,7 @@ function Content() {
                                     : "edit-video-data-row option-row preview-lightt"
                                 }
                                 onClick={() => {
-                                  window.location.href = `/studio/video/edit/${element._id}`;
+                                  navigate(`/studio/video/edit/${element._id}`);
                                 }}
                               >
                                 <ModeEditOutlineOutlinedIcon

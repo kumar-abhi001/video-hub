@@ -18,7 +18,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { BiSearch } from "react-icons/bi";
 
 function Navbar2() {
-  const backendURL = "http://localhost:3000";
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const token = localStorage.getItem("userToken");
   const [email, setEmail] = useState();
   const [profilePic, setProfilePic] = useState();

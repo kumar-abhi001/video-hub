@@ -8,9 +8,11 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function FeaturedChannels(prop) {
-  const backendURL = "https://localhost:3000"
+  const navigate = useNavigate();
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const [addChannelClicked, setAddChannelClicked] = useState(false);
   const [Subscriptions, setSubscriptions] = useState([]);
   const [Email, setEmail] = useState();
@@ -326,7 +328,7 @@ function FeaturedChannels(prop) {
                   key={index}
                   onClick={() => {
                     if (Email !== prop.newmail) {
-                      window.location.href = `/channel/${element.channelID}`;
+                      navigate(`/channel/${element.channelID}`);
                     }
                   }}
                 >

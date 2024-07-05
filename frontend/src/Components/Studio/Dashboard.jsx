@@ -12,9 +12,11 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import noVideo from "../../img/no-video2.png";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  const backendURL = "http://localhost:3000"
+  const navigate = useNavigate();
+  const backendURL = "https://video-hub-oyrn.onrender.com";
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
   const [dropDown, setDropDown] = useState(true);
@@ -542,7 +544,7 @@ function Dashboard() {
                     <p
                       className="see-comments-dash"
                       onClick={() =>
-                        (window.location.href = `/studio/video/comments/${myVideos[0]._id}`)
+                        (navigate(`/studio/video/comments/${myVideos[0]._id}`))
                       }
                     >
                       SEE COMMENTS (
@@ -580,7 +582,7 @@ function Dashboard() {
                             alt="thumbnail"
                             className="publish-imgs"
                             onClick={() =>
-                              (window.location.href = `/studio/video/edit/${element._id}`)
+                              (navigate(`/studio/video/edit/${element._id}`))
                             }
                           />
                           <div className="publish-rightdata">
@@ -627,7 +629,7 @@ function Dashboard() {
                                   fontSize="small"
                                   style={{ color: theme ? "#aaa" : "#606060" }}
                                   onClick={() =>
-                                    (window.location.href = `/studio/video/edit/${element._id}`)
+                                    (navigate(`/studio/video/edit/${element._id}`))
                                   }
                                 />
                               </div>
@@ -639,7 +641,7 @@ function Dashboard() {
                                   fontSize="small"
                                   style={{ color: theme ? "#aaa" : "#606060" }}
                                   onClick={() =>
-                                    (window.location.href = `/studio/video/comments/${element._id}`)
+                                    (navigate(`/studio/video/comments/${element._id}`))
                                   }
                                 />
                               </div>
@@ -651,7 +653,7 @@ function Dashboard() {
                                   fontSize="small"
                                   style={{ color: theme ? "#aaa" : "#606060" }}
                                   onClick={() =>
-                                    (window.location.href = `/video/${element._id}`)
+                                    (navigate(`/video/${element._id}`))
                                   }
                                 />
                               </div>
@@ -663,7 +665,7 @@ function Dashboard() {
                 </div>
                 <p
                   className="see-comments-dash go-videos"
-                  onClick={() => (window.location.href = `/studio/video`)}
+                  onClick={() => (navigate(`/studio/video`))}
                 >
                   GO TO VIDEOS
                 </p>
@@ -703,7 +705,7 @@ function Dashboard() {
                           <div className="thisanalytics-data" key={index}>
                             <p
                               onClick={() =>
-                                (window.location.href = `/studio/video/edit/${element._id}`)
+                                (navigate(`/studio/video/edit/${element._id}`))
                               }
                             >
                               {element.Title.length <= 25
