@@ -50,7 +50,7 @@ function Navbar() {
 
   useEffect(() => {
     const handler = (e) => {
-      if (!profileRef.current.contains(e.target)) {
+      if (!profileRef.current?.contains(e?.target)) {
         setShowPop(false);
       }
     };
@@ -60,7 +60,7 @@ function Navbar() {
 
   useEffect(() => {
     const handler = (e) => {
-      if (!searchRef.current.contains(e.target)) {
+      if (!searchRef.current?.contains(e.target)) {
         setNewSearch(false);
       }
     };

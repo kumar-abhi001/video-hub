@@ -48,7 +48,7 @@ function Trending() {
     const getTrending = async () => {
       try {
         const response = await fetch(
-          "https://localhost:3000/gettrending"
+          "https://video-hub-oyrn.onrender.com/gettrending"
         );
         const trending = await response.json();
         if (trending !== "NO DATA") {

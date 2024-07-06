@@ -240,7 +240,7 @@ function Browse() {
                       />
                       <div className="channel-basic-data">
                         <Skeleton
-                          key={index}
+                          key={`${index}aa`}
                           count={1}
                           width={40}
                           height={40}
@@ -248,7 +248,7 @@ function Browse() {
                           className="sk-browse-profile"
                         />
                         <Skeleton
-                          key={index}
+                          key={`${index}bb`}
                           count={2}
                           width={250}
                           height={15}

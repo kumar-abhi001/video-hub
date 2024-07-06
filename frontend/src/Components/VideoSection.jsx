@@ -2157,11 +2157,12 @@ function VideoSection() {
                 </div>
               </div>
               <div className="video-section2">
-                {Array.from({ length: 10 }).map(() => (
+                {Array.from({ length: 10 }).map((_, index) => (
                   <>
                     <div
                       className="video-data123"
                       style={{ marginTop: "10px" }}
+                      key={index}
                     >
                       <div className="video-left-side">
                         <Skeleton
@@ -3156,7 +3157,9 @@ function VideoSection() {
               !UserPlaylist.includes("No playlists available...") &&
               UserPlaylist.map((element, index) => {
                 return (
+                  
                   <div className="all-playlists" key={index}>
+                    {console.log("key ", index)}
                     {(playlistID &&
                       playlistID.length > 0 &&
                       playlistID.includes(element._id) === false) ||

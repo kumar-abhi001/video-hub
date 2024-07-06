@@ -115,19 +115,14 @@ function Library() {
   }, [email]);
 
   useEffect(() => {
-    const getLikeVideos = async () => {
       try {
-        const response = await fetch(
+        fetch(
           `${backendURL}/getlikevideos/${email}`
-        );
-        const result = await response.json();
-        setLikedVideos(result);
+        ).then((response) => response.json())
+          .then((data) => setLikedVideos(data));
       } catch (error) {
-        // console.log(error.message);
+        console.log(error.message);
       }
-    };
-
-    getLikeVideos()
   }, [email]);
 
   useEffect(() => {
@@ -221,8 +216,8 @@ function Library() {
       : [];
 
   const LikedVideosArray =
-    videolike && videolike.length > 0 && videolike !== "NO DATA"
-      ? videolike.slice(0, 6) // Get the first four elements if available
+    videolike
+      ? videolike // Get the first four elements if available
       : [];
 
   if (
@@ -883,33 +878,7 @@ function Library() {
               <Skeleton count={1} width={160} height={22} />
             </div>
             <div className="watchlater-library-videos">
-              {LikedVideosArray &&
-                LikedVideosArray.map((element, index) => {
-                  return (
-                    <div className="thiswatchlater-videoss" key={index}>
-                      <Skeleton
-                        count={1}
-                        width={225}
-                        height={129}
-                        style={{ borderRadius: "8px" }}
-                      />
-                      <div
-                        className="thislibrary-video-details"
-                        style={{ position: "relative", top: "12px" }}
-                      >
-                        <Skeleton count={1} width={210} height={22} />
-
-                        <div className="thisvideo-extra-daataa">
-                          <Skeleton count={1} width={180} height={18} />
-
-                          <div className="thisvide-oneliner-2">
-                            <Skeleton count={1} width={140} height={14} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+              hi
             </div>
           </div>
         </SkeletonTheme>
@@ -952,117 +921,7 @@ function Library() {
             )}
           </div>
           <div className="watchlater-library-videos">
-            {LikedVideosArray &&
-              LikedVideosArray.map((element, index) => {
-                return (
-                  <div
-                    className="thiswatchlater-videoss"
-                    key={index}
-                    onClick={() => {
-                      window.location.href = `/video/${element.likedVideoID}`;
-                    }}
-                  >
-                    <img
-                      src={element.thumbnailURL}
-                      alt="thumbnail"
-                      className="thiswatch-thumbnail"
-                    />
-                    <p
-                      className={
-                        theme
-                          ? "thislibrary-duration"
-                          : "thislibrary-duration text-dark-mode"
-                      }
-                    >
-                      {Math.floor(element.videoLength / 60) +
-                        ":" +
-                        (Math.round(element.videoLength % 60) < 10
-                          ? "0" + Math.round(element.videoLength % 60)
-                          : Math.round(element.videoLength % 60))}
-                    </p>
-                    <div
-                      className={
-                        theme
-                          ? "thislibrary-video-details"
-                          : "thislibrary-video-details light-mode"
-                      }
-                    >
-                      <p>
-                        {element.Title && element.Title.length <= 46
-                          ? element.Title
-                          : `${element.Title.slice(0, 46)}..`}
-                      </p>
-                      <div className="thisvideo-extra-daataa">
-                        <div
-                          className={
-                            theme
-                              ? "thisvide-oneliner-1"
-                              : "thisvide-oneliner-1 text-light-mode2"
-                          }
-                        >
-                          <p>{element.uploader}</p>
-                          <Tooltip
-                            TransitionComponent={Zoom}
-                            title="Verified"
-                            placement="right"
-                          >
-                            <CheckCircleIcon
-                              fontSize="100px"
-                              style={{
-                                color: "rgb(138, 138, 138)",
-                                marginLeft: "4px",
-                              }}
-                            />
-                          </Tooltip>
-                        </div>
-                        <div className="thisvide-oneliner-2">
-                          <p
-                            className={
-                              theme
-                                ? "thisvideo-uploaddate"
-                                : "thisvideo-uploaddate text-light-mode2"
-                            }
-                          >
-                            {(() => {
-                              const timeDifference =
-                                new Date() - new Date(element.uploaded_date);
-                              const minutes = Math.floor(
-                                timeDifference / 60000
-                              );
-                              const hours = Math.floor(
-                                timeDifference / 3600000
-                              );
-                              const days = Math.floor(
-                                timeDifference / 86400000
-                              );
-                              const weeks = Math.floor(
-                                timeDifference / 604800000
-                              );
-                              const years = Math.floor(
-                                timeDifference / 31536000000
-                              );
-
-                              if (minutes < 1) {
-                                return "just now";
-                              } else if (minutes < 60) {
-                                return `${minutes} mins ago`;
-                              } else if (hours < 24) {
-                                return `${hours} hours ago`;
-                              } else if (days < 7) {
-                                return `${days} days ago`;
-                              } else if (weeks < 52) {
-                                return `${weeks} weeks ago`;
-                              } else {
-                                return `${years} years ago`;
-                              }
-                            })()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+            hi
           </div>
         </div>
       </div>
